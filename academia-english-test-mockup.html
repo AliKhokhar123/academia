@@ -1,0 +1,1012 @@
+<title>Academia English Test Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* ============================================================
+   ACADEMIA — /engleski-test/ redesign mockup
+   Tokens taken from the live site's Elementor kit (post-24888.css)
+   primary #333367 · secondary #ED7733 · heading #131C43 · Montserrat/Roboto
+   ============================================================ */
+
+:root{
+  --navy:#131C43;
+  --indigo:#333367;
+  --indigo-soft:#5B5B93;
+  --orange:#ED7733;
+  --orange-dk:#D9631F;
+  --orange-tint:#FDF1E9;
+  --indigo-tint:#F2F2F8;
+  --paper:#FBFBFD;
+  --white:#FFFFFF;
+  --line:#E4E5EE;
+  --line-strong:#CFD1E0;
+  --muted:#6E7191;
+  --green:#2E7D5B;
+  --green-tint:#EAF5F0;
+
+  --shell:#22243A;
+  --shell-2:#2C2E48;
+  --shell-line:#3D3F5C;
+  --shell-text:#C9CADE;
+
+  --f-head:"Montserrat","Segoe UI",system-ui,sans-serif;
+  --f-body:"Roboto","Segoe UI",system-ui,sans-serif;
+  --f-note:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --r-sm:10px; --r:16px; --r-lg:20px;
+  --sh-sm:0 1px 2px rgba(19,28,67,.05);
+  --sh:0 2px 10px rgba(19,28,67,.06);
+  --sh-lg:0 12px 36px rgba(19,28,67,.10);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--shell);
+  color:var(--navy);
+  font-family:var(--f-body);
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+button{font:inherit;color:inherit}
+
+/* ---------- proposal shell ---------- */
+.shell-head{
+  background:var(--shell);
+  border-bottom:1px solid var(--shell-line);
+  padding:18px 24px;
+  display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;justify-content:space-between;
+}
+.shell-id{display:flex;flex-direction:column;gap:3px;min-width:0}
+.shell-id b{
+  font-family:var(--f-head);font-size:14px;font-weight:700;color:#fff;letter-spacing:.01em;
+}
+.shell-id span{
+  font-family:var(--f-note);font-size:11.5px;color:var(--shell-text);
+}
+.shell-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{
+  display:flex;background:var(--shell-2);border:1px solid var(--shell-line);
+  border-radius:999px;padding:3px;gap:2px;
+}
+.seg button{
+  border:0;background:transparent;color:var(--shell-text);
+  font-family:var(--f-note);font-size:11.5px;letter-spacing:.04em;
+  padding:7px 14px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s;
+}
+.seg button:hover{color:#fff}
+.seg button[aria-pressed="true"]{background:var(--orange);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+/* ---------- stage / device frame ---------- */
+.stage-wrap{padding:34px 20px 60px;display:flex;justify-content:center;background:var(--shell)}
+.stage{
+  container-type:inline-size;container-name:canvas;
+  width:100%;max-width:1180px;
+  background:var(--paper);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+  transition:max-width .28s ease;
+}
+.stage-wrap[data-device="tablet"] .stage{max-width:834px}
+.stage-wrap[data-device="mobile"] .stage{max-width:390px;border-radius:28px}
+
+/* ---------- annotations ---------- */
+.note{
+  font-family:var(--f-note);font-size:12.5px;line-height:1.65;
+  color:var(--indigo);
+  background:var(--indigo-tint);
+  border-left:3px solid var(--indigo-soft);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  margin:0 auto;
+  max-width:820px;
+}
+.note b{display:block;font-weight:500;color:var(--navy);letter-spacing:.06em;margin-bottom:4px;font-size:11px}
+.notes-off .note{display:none}
+.note-band{padding:0 clamp(20px,5cqw,64px) 26px}
+
+/* ---------- page primitives ---------- */
+.wrap{max-width:1040px;margin:0 auto;padding-inline:clamp(20px,5cqw,64px)}
+.narrow{max-width:760px;margin-inline:auto}
+.sec{padding-block:clamp(48px,7cqw,96px)}
+.sec--tint{background:var(--indigo-tint)}
+.sec--paper{background:var(--white)}
+
+h1,h2,h3,h4{font-family:var(--f-head);color:var(--navy);margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,4.6cqw,50px);font-weight:800;line-height:1.1;letter-spacing:-.022em}
+h2{font-size:clamp(24px,2.9cqw,34px);font-weight:700;line-height:1.2;letter-spacing:-.015em}
+h3{font-size:clamp(17px,1.7cqw,20px);font-weight:600;line-height:1.35}
+p{margin:0;font-size:clamp(15px,1.45cqw,17px);line-height:1.72;color:#414463}
+.lead{font-size:clamp(16px,1.65cqw,19px);line-height:1.65;color:#414463;max-width:56ch}
+.small{font-size:13.5px;line-height:1.6;color:var(--muted)}
+.eyebrow{
+  font-family:var(--f-head);font-size:11.5px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin:0;
+}
+.eyebrow--mut{color:var(--indigo-soft)}
+.stack{display:flex;flex-direction:column}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g24{gap:24px}.g32{gap:32px}.g40{gap:40px}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--f-head);font-size:14px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:17px 30px;border-radius:12px;border:2px solid transparent;
+  cursor:pointer;text-decoration:none;transition:background .16s,border-color .16s,color .16s,transform .12s,box-shadow .16s;
+}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid rgba(51,51,103,.35);outline-offset:2px}
+.btn--primary{background:var(--orange);color:#fff;box-shadow:0 6px 18px rgba(237,119,51,.28)}
+.btn--primary:hover{background:var(--orange-dk);box-shadow:0 8px 22px rgba(237,119,51,.34)}
+.btn--secondary{background:var(--white);color:var(--indigo);border-color:var(--line-strong)}
+.btn--secondary:hover{border-color:var(--indigo);background:var(--indigo-tint)}
+.btn--lg{padding:19px 38px;font-size:15px}
+.btn--block{width:100%}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+.link{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--f-head);font-size:14px;font-weight:600;
+  color:var(--indigo);text-decoration:none;border-bottom:1px solid transparent;
+}
+.link:hover{color:var(--orange);border-bottom-color:var(--orange)}
+.link .arw{transition:transform .16s}
+.link:hover .arw{transform:translateX(3px)}
+
+/* ---------- site header ---------- */
+.site-head{
+  background:var(--white);border-bottom:1px solid var(--line);
+  padding:14px clamp(20px,5cqw,64px);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-mark{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--indigo);color:#fff;
+  display:grid;place-items:center;
+  font-family:var(--f-head);font-weight:800;font-size:19px;
+}
+.logo-txt{display:flex;flex-direction:column;line-height:1.1}
+.logo-txt b{font-family:var(--f-head);font-size:16px;font-weight:800;letter-spacing:.05em;color:var(--navy)}
+.logo-txt span{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.head-cta{display:flex;align-items:center;gap:18px}
+.head-tel{font-family:var(--f-head);font-size:14px;font-weight:600;color:var(--indigo);text-decoration:none}
+.head-cta .btn{padding:11px 20px;font-size:12px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--white);padding-block:clamp(46px,6.5cqw,88px);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(32px,5cqw,72px);align-items:center}
+.benefits{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.benefits li{
+  display:flex;align-items:center;gap:8px;
+  background:var(--white);border:1px solid var(--line);
+  border-radius:999px;padding:9px 16px 9px 12px;
+  font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--navy);
+}
+.tick{width:16px;height:16px;flex:none;color:var(--orange)}
+.hero-micro{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--line-strong)}
+
+/* CEFR ladder — replaces the stock photo */
+.cefr{
+  background:var(--indigo-tint);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:clamp(22px,2.6cqw,32px);
+}
+.cefr-label{font-family:var(--f-head);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-soft)}
+.ladder{display:flex;align-items:flex-end;gap:clamp(6px,.9cqw,12px);height:186px;margin-top:20px}
+.rung{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;text-align:center}
+.rung .bar{
+  border-radius:8px 8px 0 0;background:#DDDEEA;
+  transition:background .2s;
+}
+.rung:nth-child(1) .bar{height:26%}
+.rung:nth-child(2) .bar{height:42%}
+.rung:nth-child(3) .bar{height:58%}
+.rung:nth-child(4) .bar{height:76%}
+.rung:nth-child(5) .bar{height:100%}
+.rung.is-on .bar{background:var(--indigo)}
+.rung.is-tip .bar{background:var(--orange)}
+.rung span{font-family:var(--f-head);font-size:13px;font-weight:700;color:var(--indigo-soft)}
+.rung.is-on span,.rung.is-tip span{color:var(--navy)}
+.cefr-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-strong);font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ---------- trust ---------- */
+.trust{border-block:1px solid var(--line);background:var(--white);padding-block:26px}
+.trust-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 34px;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:9px;font-family:var(--f-head);font-size:13px;font-weight:600;color:#4A4D6B}
+.trust-item svg{width:17px;height:17px;color:var(--indigo-soft);flex:none}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--sh);
+}
+.card--form{max-width:760px;margin-inline:auto;padding:clamp(26px,3.6cqw,44px)}
+
+/* form */
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--navy)}
+.field input{
+  font-family:var(--f-body);font-size:16px;color:var(--navy);
+  padding:15px 16px;border:1px solid var(--line-strong);border-radius:12px;background:var(--white);
+  transition:border-color .15s,box-shadow .15s;
+}
+.field input::placeholder{color:#A2A4BC}
+.field input:focus{outline:0;border-color:var(--indigo);box-shadow:0 0 0 3px rgba(51,51,103,.12)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* selectable option cards (replaces default radios) */
+.opts{display:grid;gap:10px}
+.opt{
+  display:flex;align-items:center;gap:13px;
+  border:1px solid var(--line-strong);border-radius:12px;
+  padding:15px 17px;background:var(--white);cursor:pointer;
+  font-family:var(--f-body);font-size:15.5px;color:#33364F;text-align:left;
+  transition:border-color .14s,background .14s,box-shadow .14s;
+}
+.opt:hover{border-color:var(--indigo-soft);background:#FAFAFE}
+.opt:focus-visible{outline:3px solid rgba(51,51,103,.3);outline-offset:2px}
+.opt .mark{
+  width:21px;height:21px;flex:none;border-radius:50%;
+  border:2px solid var(--line-strong);background:var(--white);
+  display:grid;place-items:center;transition:border-color .14s,background .14s;
+}
+.opt .mark::after{content:"";width:9px;height:9px;border-radius:50%;background:transparent;transition:background .14s}
+.opt[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-tint);box-shadow:0 0 0 1px var(--indigo) inset}
+.opt[aria-pressed="true"] .mark{border-color:var(--indigo)}
+.opt[aria-pressed="true"] .mark::after{background:var(--indigo)}
+
+/* ---------- quiz ---------- */
+.quiz-card{max-width:760px;margin-inline:auto;padding:clamp(24px,3.4cqw,40px)}
+.prog-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.prog-lab{font-family:var(--f-head);font-size:13.5px;font-weight:700;color:var(--navy);letter-spacing:.01em}
+.prog-pct{font-family:var(--f-head);font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog-track{height:7px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog-fill{height:100%;background:var(--orange);border-radius:99px;width:30%;transition:width .3s ease}
+.q-num{
+  font-family:var(--f-head);font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--indigo-soft);
+}
+.q-text{
+  font-family:var(--f-head);font-size:clamp(19px,2.1cqw,26px);font-weight:600;
+  line-height:1.4;color:var(--navy);margin:0;
+}
+.q-text u{text-decoration:none;border-bottom:2px solid var(--orange);padding:0 26px}
+.a-opt{
+  display:flex;align-items:center;gap:14px;width:100%;
+  border:1px solid var(--line-strong);border-radius:12px;
+  padding:17px 18px;background:var(--white);cursor:pointer;text-align:left;
+  font-family:var(--f-body);font-size:16.5px;color:#33364F;
+  transition:border-color .14s,background .14s,box-shadow .14s,transform .12s;
+}
+.a-opt:hover{border-color:var(--indigo-soft);background:#FAFAFE;transform:translateX(2px)}
+.a-opt:focus-visible{outline:3px solid rgba(51,51,103,.3);outline-offset:2px}
+.a-opt .key{
+  width:30px;height:30px;flex:none;border-radius:8px;
+  border:1px solid var(--line-strong);background:#F7F7FB;
+  display:grid;place-items:center;
+  font-family:var(--f-head);font-size:12.5px;font-weight:700;color:var(--muted);
+  transition:background .14s,color .14s,border-color .14s;
+}
+.a-opt[aria-pressed="true"]{border-color:var(--indigo);background:var(--indigo-tint);box-shadow:0 0 0 1px var(--indigo) inset}
+.a-opt[aria-pressed="true"] .key{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.quiz-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:22px;border-top:1px solid var(--line)}
+.ghost{
+  background:none;border:0;cursor:pointer;padding:10px 2px;
+  font-family:var(--f-head);font-size:13.5px;font-weight:600;color:var(--muted);
+}
+.ghost:hover{color:var(--indigo)}
+.ghost[disabled]{opacity:.35;cursor:not-allowed}
+
+/* ---------- result ---------- */
+.result-card{
+  max-width:760px;margin-inline:auto;
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:var(--white);box-shadow:var(--sh-lg);overflow:hidden;
+}
+.result-top{padding:clamp(28px,3.6cqw,44px);display:flex;gap:clamp(22px,3cqw,40px);align-items:center}
+.ring{width:132px;height:132px;flex:none}
+.ring text{font-family:var(--f-head)}
+.score-cap{font-family:var(--f-head);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-soft)}
+.result-cta{
+  background:var(--indigo);color:#fff;padding:clamp(26px,3.4cqw,40px);
+  display:flex;flex-direction:column;gap:18px;
+}
+.result-cta h3{color:#fff;font-size:clamp(19px,2.1cqw,25px);font-weight:700;line-height:1.32}
+.result-cta p{color:#C9CAE4;font-size:15.5px}
+.free-badge{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);
+  border-radius:999px;padding:7px 15px;
+  font-family:var(--f-head);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#fff;
+}
+.deliver{list-style:none;padding:0;margin:0;display:grid;gap:9px}
+.deliver li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:#DDDEEE;line-height:1.5}
+.deliver svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--orange)}
+
+/* ---------- services ---------- */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 22px;display:flex;flex-direction:column;gap:11px;
+  transition:border-color .16s,box-shadow .16s,transform .16s;
+}
+.svc:hover{border-color:var(--line-strong);box-shadow:var(--sh-lg);transform:translateY(-2px)}
+.svc h3{font-size:17px}
+.svc p{font-size:14.5px;line-height:1.6;color:var(--muted);flex:1}
+.svc .link{margin-top:2px;font-size:13.5px}
+.svc-tag{
+  font-family:var(--f-head);font-size:10.5px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--indigo-soft);
+}
+
+/* ---------- offer ---------- */
+.offer{
+  max-width:820px;margin-inline:auto;background:var(--white);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-lg);overflow:hidden;
+}
+.offer-head{
+  background:var(--navy);color:#fff;padding:14px clamp(24px,3cqw,38px);
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+.offer-head b{font-family:var(--f-head);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.offer-head span{font-family:var(--f-head);font-size:12.5px;font-weight:500;color:#AFB1CE}
+.offer-body{padding:clamp(26px,3.6cqw,44px);display:grid;grid-template-columns:1fr auto;gap:clamp(24px,3cqw,44px);align-items:center}
+.price-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.price-old{font-family:var(--f-head);font-size:20px;font-weight:600;color:var(--muted);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.price-new{font-family:var(--f-head);font-size:clamp(32px,4cqw,46px);font-weight:800;color:var(--navy);letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.save{
+  display:inline-flex;align-items:center;gap:7px;background:var(--green-tint);color:var(--green);
+  border-radius:8px;padding:7px 13px;
+  font-family:var(--f-head);font-size:12.5px;font-weight:700;letter-spacing:.05em;
+}
+.offer-actions{display:flex;flex-direction:column;gap:11px;min-width:266px}
+.offer-foot{
+  border-top:1px solid var(--line);background:#FAFAFC;
+  padding:15px clamp(24px,3cqw,38px);display:flex;gap:9px;align-items:center;
+  font-size:13px;color:var(--muted);
+}
+
+/* ---------- payment ---------- */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.pay-panel{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.pay-cap{
+  font-family:var(--f-note);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--indigo-soft);margin-bottom:14px;display:block;
+}
+.qr{width:150px;height:150px;display:grid;grid-template-columns:repeat(21,1fr);gap:0;background:#fff;padding:8px;border:1px solid var(--line);border-radius:10px}
+.qr i{background:transparent}
+.qr i.on{background:var(--navy)}
+.pay-rows{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.pay-rows li{display:flex;justify-content:space-between;gap:14px;font-size:14px;border-bottom:1px dashed var(--line);padding-bottom:10px}
+.pay-rows li:last-child{border-bottom:0;padding-bottom:0}
+.pay-rows dt{color:var(--muted);font-size:13px}
+.pay-rows b{font-family:var(--f-head);font-weight:600;color:var(--navy);text-align:right;font-variant-numeric:tabular-nums}
+.phone-sim{
+  width:250px;margin-inline:auto;border:8px solid #1D1F35;border-radius:30px;
+  background:var(--white);padding:18px 14px;box-shadow:var(--sh-lg);
+}
+.acc{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden}
+.acc-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--white);border:0;padding:15px 16px;cursor:pointer;
+  font-family:var(--f-head);font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--indigo);
+}
+.acc-btn:hover{background:var(--indigo-tint)}
+.acc-panel{border-top:1px solid var(--line);padding:16px;display:none;background:#FAFAFC}
+.acc.is-open .acc-panel{display:block}
+.acc.is-open .chev{transform:rotate(180deg)}
+.chev{transition:transform .2s;width:14px;height:14px}
+.copy-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.copy-row:last-of-type{border-bottom:0}
+.copy-row span{font-size:12px;color:var(--muted)}
+.copy-row b{font-family:var(--f-head);font-size:13px;color:var(--navy);font-variant-numeric:tabular-nums}
+
+/* ---------- footer ---------- */
+.foot{background:var(--navy);color:#fff;padding:clamp(36px,4.4cqw,56px) 0 26px}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
+.foot h4{font-family:var(--f-head);font-size:11.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#8C8FB8;margin:0 0 12px}
+.foot a{color:#DDDEEE;text-decoration:none;font-size:14.5px;line-height:2}
+.foot a:hover{color:var(--orange)}
+.foot p{color:#B9BBD6;font-size:14.5px;line-height:1.8}
+.foot-bot{
+  border-top:1px solid #2A3360;margin-top:30px;padding-top:18px;
+  display:flex;flex-wrap:wrap;gap:10px 20px;justify-content:space-between;
+  font-size:12.5px;color:#8C8FB8;
+}
+.foot .logo-mark{background:var(--white);color:var(--navy)}
+.foot .logo-txt b{color:#fff}
+.foot .logo-txt span{color:#8C8FB8}
+
+/* ---------- system appendix ---------- */
+.sys{background:var(--white)}
+.sys-block{border:1px solid var(--line);border-radius:var(--r);padding:26px;background:var(--white)}
+.sys-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.sw{display:flex;flex-direction:column;gap:7px}
+.sw i{display:block;height:56px;border-radius:10px;border:1px solid var(--line)}
+.sw b{font-family:var(--f-note);font-size:10.5px;color:var(--navy)}
+.sw span{font-family:var(--f-note);font-size:10px;color:var(--muted)}
+.type-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.type-row:last-child{border-bottom:0}
+.type-row code{font-family:var(--f-note);font-size:10.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- responsive (container queries drive the device frame) ---------- */
+@container canvas (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .offer-body{grid-template-columns:1fr;align-items:stretch}
+  .offer-actions{min-width:0}
+  .pay-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .sys-grid{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(3,1fr)}
+}
+@container canvas (max-width:640px){
+  .site-head .head-tel{display:none}
+  .two-col{grid-template-columns:1fr}
+  .result-top{flex-direction:column;text-align:center;gap:18px}
+  .svc-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr;gap:26px}
+  .ladder{height:150px}
+  .btn{width:100%;padding:17px 20px}
+  .head-cta .btn{width:auto}
+  .quiz-foot{flex-direction:column-reverse;align-items:stretch;gap:10px}
+  .quiz-foot .ghost{text-align:center}
+  .trust-row{justify-content:flex-start;gap:12px 22px}
+  .hero-micro{flex-wrap:wrap}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+</style>
+
+<!-- =========================== PROPOSAL SHELL =========================== -->
+<header class="shell-head">
+  <div class="shell-id">
+    <b>Academia · /engleski-test/ — redesign mockup</b>
+    <span>Interactive concept · brand tokens pulled from the live site</span>
+  </div>
+  <div class="shell-tools">
+    <div class="seg" role="group" aria-label="Device preview">
+      <button type="button" data-dev="desktop" aria-pressed="true">Desktop</button>
+      <button type="button" data-dev="tablet" aria-pressed="false">Tablet</button>
+      <button type="button" data-dev="mobile" aria-pressed="false">Mobile</button>
+    </div>
+    <div class="seg" role="group" aria-label="Annotations">
+      <button type="button" id="noteToggle" aria-pressed="true">Notes on</button>
+    </div>
+  </div>
+</header>
+
+<div class="stage-wrap" id="stageWrap" data-device="desktop">
+<div class="stage" id="stage">
+
+  <!-- ============================ SITE HEADER ============================ -->
+  <div class="site-head">
+    <div class="logo">
+      <div class="logo-mark">a</div>
+      <div class="logo-txt"><b>ACADEMIA</b><span>Škola stranih jezika</span></div>
+    </div>
+    <div class="head-cta">
+      <a class="head-tel" href="#pay">063 8305 344</a>
+      <a class="btn btn--primary" href="#form">Započni test</a>
+    </div>
+  </div>
+
+  <!-- ================================ HERO =============================== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="stack g24">
+        <p class="eyebrow">Besplatan online test · 40 pitanja</p>
+        <h1>Koliko dobro znaš engleski?</h1>
+        <p class="lead">Uradi naš besplatan test i proveri svoje znanje kroz 40 gradiranih pitanja — od osnovnih do naprednih.</p>
+        <ul class="benefits">
+          <li><svg class="tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Besplatno</li>
+          <li><svg class="tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>40 pitanja</li>
+          <li><svg class="tick" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Besplatna procena nivoa i preporuka</li>
+        </ul>
+        <div class="stack g12" style="align-items:flex-start">
+          <a class="btn btn--primary btn--lg" href="#form">Započni test</a>
+          <div class="hero-micro"><span>Traje oko 10 minuta</span><i class="dot"></i><span>Bez obaveza</span><i class="dot"></i><span>Rezultat odmah</span></div>
+        </div>
+      </div>
+
+      <div class="cefr" aria-label="CEFR skala od A1 do C1">
+        <span class="cefr-label">Tvoj nivo po CEFR skali</span>
+        <div class="ladder">
+          <div class="rung is-on"><div class="bar"></div><span>A1</span></div>
+          <div class="rung is-on"><div class="bar"></div><span>A2</span></div>
+          <div class="rung is-on"><div class="bar"></div><span>B1</span></div>
+          <div class="rung is-tip"><div class="bar"></div><span>B2</span></div>
+          <div class="rung"><div class="bar"></div><span>C1</span></div>
+        </div>
+        <p class="cefr-foot">Test pokriva gramatiku i vokabular kroz sve nivoe — od A1 do C1. Nakon testa procenjujemo gde se tačno nalaziš.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-band" style="padding-top:22px">
+    <div class="note"><b>01 · HERO</b>Stock photography replaced by a CEFR progression rail built from type and blocks — it carries information (what the test measures) instead of decoration. One primary CTA, three benefits, no competing headings. The hero is sized to its content, not to the viewport.</div>
+  </div>
+
+  <!-- ================================ TRUST ============================== -->
+  <section class="trust">
+    <div class="wrap trust-row">
+      <div class="trust-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2l6.5 3v5c0 4-2.8 7-6.5 8-3.7-1-6.5-4-6.5-8V5L10 2z"/></svg>Akreditovana škola stranih jezika</div>
+      <div class="trust-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="8" r="4"/><path d="M6.5 12.5L5 18l5-2.2L15 18l-1.5-5.5"/></svg>Zvanični dvojezični CEFR sertifikat</div>
+      <div class="trust-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 10h14M10 3v14"/><circle cx="10" cy="10" r="7.5"/></svg>Saradnja sa British Council-om</div>
+      <div class="trust-item"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7.5"/><path d="M10 6v4.5l3 1.8"/></svg>Nastava od 1998.</div>
+    </div>
+  </section>
+
+  <div class="note-band" style="padding-top:22px">
+    <div class="note"><b>14 · TRUST</b>One quiet line of real credentials in the existing text style — no badge wall, no logo carousel. Final wording to be confirmed against Academia's actual accreditations page before it goes live.</div>
+  </div>
+
+  <!-- ============================== LEAD FORM ============================ -->
+  <section class="sec sec--tint" id="form">
+    <div class="wrap">
+      <div class="stack g24 narrow" style="text-align:center;align-items:center;margin-bottom:30px">
+        <h2>Pre nego što počnemo</h2>
+        <p class="lead" style="text-align:center">Ostavi osnovne podatke da bismo rezultat testa mogli da povežemo sa tvojom procenom i preporukom.</p>
+      </div>
+
+      <form class="card card--form stack g24" id="leadForm" novalidate>
+        <div class="two-col">
+          <div class="field">
+            <label for="ime">Ime i prezime</label>
+            <input id="ime" type="text" placeholder="Marija Jovanović" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="mail">Email</label>
+            <input id="mail" type="email" placeholder="marija@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="field">
+          <label id="goalLabel">Šta želiš da postigneš sa engleskim?</label>
+          <div class="opts" role="group" aria-labelledby="goalLabel" data-single>
+            <button type="button" class="opt" aria-pressed="false"><span class="mark"></span>Želim da usavršim engleski</button>
+            <button type="button" class="opt" aria-pressed="false"><span class="mark"></span>Potreban mi je sertifikat znanja engleskog jezika</button>
+            <button type="button" class="opt" aria-pressed="true"><span class="mark"></span>Trebaju mi pripremni časovi za polaganje IELTS ispita</button>
+            <button type="button" class="opt" aria-pressed="false"><span class="mark"></span>Potreban mi je probni IELTS test</button>
+            <button type="button" class="opt" aria-pressed="false"><span class="mark"></span>Želim da proverim svoje trenutno znanje</button>
+          </div>
+        </div>
+
+        <div class="stack g12">
+          <a href="#quiz" class="btn btn--primary btn--lg btn--block">Započni test</a>
+          <p class="small" style="text-align:center">Podaci se koriste isključivo za procenu nivoa i preporuku. Bez spama.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>02 + 03 · INTRO &amp; LEAD FORM</b>Four headings and two instruction paragraphs collapse into one heading, one sentence, one card. 760px, centred, 20px radius, generous padding, hairline border. Radio inputs become full-width selectable rows with a real selected state — the whole row is the hit target, which is what fixes this on mobile.</div>
+  </div>
+
+  <!-- ================================ QUIZ =============================== -->
+  <section class="sec sec--paper" id="quiz">
+    <div class="wrap">
+      <div class="card quiz-card stack g24" id="quizCard">
+        <div>
+          <div class="prog-head">
+            <span class="prog-lab" id="progLab">Pitanje 12 od 40</span>
+            <span class="prog-pct" id="progPct">30%</span>
+          </div>
+          <div class="prog-track"><div class="prog-fill" id="progFill" style="width:30%"></div></div>
+        </div>
+
+        <div class="stack g16">
+          <span class="q-num" id="qNum">Pitanje 12</span>
+          <p class="q-text" id="qText">Where <u></u> when you met him?</p>
+        </div>
+
+        <div class="opts" id="answers" data-single></div>
+
+        <div class="quiz-foot">
+          <button type="button" class="ghost" id="prevBtn">← Nazad</button>
+          <button type="button" class="btn btn--primary" id="nextBtn">Dalje</button>
+        </div>
+      </div>
+      <p class="small" style="text-align:center;margin-top:16px">
+        <button type="button" class="ghost" id="skipBtn" style="font-family:var(--f-note);font-size:12px">Mockup: preskoči na rezultat →</button>
+      </p>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>04 + 05 + 06 · QUIZ UX</b>One question per screen. QSM supports pagination natively (Options → Pagination), so this is the reliable route: one question per page with the theme's own markup restyled — no fork of the plugin, questions and scoring logic untouched. If per-question pagination proves unstable on this install, the fallback is 5 per page (8 steps) with the same visual treatment. Progress label and bar are custom markup bound to QSM's page state. Answer rows are 100% clickable with hover and selected states; the real questions above come from the live test.</div>
+  </div>
+
+  <!-- =============================== RESULT ============================== -->
+  <section class="sec sec--tint" id="result">
+    <div class="wrap">
+      <div class="result-card">
+        <div class="result-top">
+          <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="31 od 40 tačnih odgovora">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#E4E5EE" stroke-width="11"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#ED7733" stroke-width="11" stroke-linecap="round"
+                    stroke-dasharray="326.7" stroke-dashoffset="73.5" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" font-size="30" font-weight="800" fill="#131C43">31</text>
+            <text x="60" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#6E7191">od 40</text>
+          </svg>
+          <div class="stack g12">
+            <span class="score-cap">Test završen</span>
+            <h2>31 tačan odgovor od 40</h2>
+            <p>Broj tačnih odgovora je samo deo slike. Precizan CEFR nivo zavisi i od toga <em>koja</em> si pitanja tačno odgovorio/la — zato rezultat pregledamo ručno.</p>
+          </div>
+        </div>
+
+        <div class="result-cta">
+          <span class="free-badge">Besplatno</span>
+          <h3>Želiš da saznaš da li je tvoj nivo B1, B2 ili C1?</h3>
+          <ul class="deliver">
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Procenu nivoa po CEFR skali</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Kratku analizu tvojih odgovora</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Preporuku za sledeći korak</li>
+          </ul>
+          <a class="btn btn--primary btn--lg" href="#offer">Pošalji rezultat i saznaj nivo</a>
+          <p class="small" style="color:#A9ABCB">Odgovaramo u roku od jednog radnog dana.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>07 · RESULT &amp; LEAD CONVERSION</b>The score becomes the visual anchor, then immediately hands over to the one action that matters. Inverted indigo panel makes the CTA the highest-contrast element on the page — deliberately the strongest block in the whole layout. "Besplatno" is stated as a badge, not shouted in the headline.</div>
+  </div>
+
+  <!-- ============================== SERVICES ============================= -->
+  <section class="sec sec--paper">
+    <div class="wrap stack g32">
+      <div class="stack g12" style="max-width:60ch">
+        <p class="eyebrow eyebrow--mut">Sledeći korak</p>
+        <h2>A ako već znaš šta ti treba, ne moraš da čekaš</h2>
+      </div>
+      <div class="svc-grid">
+        <div class="svc">
+          <span class="svc-tag">Individualno</span>
+          <h3>Usavrši engleski</h3>
+          <p>Individualni online časovi prilagođeni tvom nivou, ciljevima i tempu učenja.</p>
+          <a class="link" href="#offer">Saznaj više <span class="arw">→</span></a>
+        </div>
+        <div class="svc">
+          <span class="svc-tag">Sertifikat</span>
+          <h3>Sertifikat znanja</h3>
+          <p>Zvaničan dvojezični CEFR sertifikat o znanju engleskog jezika.</p>
+          <a class="link" href="#offer">Saznaj više <span class="arw">→</span></a>
+        </div>
+        <div class="svc">
+          <span class="svc-tag">Priprema</span>
+          <h3>IELTS priprema</h3>
+          <p>Individualni pripremni časovi za polaganje IELTS ispita.</p>
+          <a class="link" href="#offer">Saznaj više <span class="arw">→</span></a>
+        </div>
+        <div class="svc">
+          <span class="svc-tag">Simulacija</span>
+          <h3>IELTS probni test</h3>
+          <p>Simulacija IELTS ispita u realnim uslovima, sa povratnom informacijom.</p>
+          <a class="link" href="#offer">Saznaj više <span class="arw">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>08 · SERVICES</b>Four equal cards, identical inner padding and baselines, one text-link CTA style. 4 → 2 → 1 columns. The card is deliberately plain so the offer card below reads as the louder element.</div>
+  </div>
+
+  <!-- =============================== OFFER =============================== -->
+  <section class="sec sec--tint" id="offer">
+    <div class="wrap">
+      <div class="offer">
+        <div class="offer-head">
+          <b>Posebna ponuda</b>
+          <span>Za polaznike koji su završili test</span>
+        </div>
+        <div class="offer-body">
+          <div class="stack g16">
+            <div class="stack g8">
+              <h3 style="font-size:clamp(19px,2.2cqw,25px);font-weight:700">Individualni online časovi engleskog</h3>
+              <p class="small">10 individualnih časova · profesor kreira program samo za tebe</p>
+            </div>
+            <div class="price-row">
+              <span class="price-old">30.000 RSD</span>
+              <span class="price-new">25.000 RSD</span>
+            </div>
+            <span class="save">
+              <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 15V5M6 9l4-4 4 4"/></svg>
+              Ušteda 5.000 RSD
+            </span>
+          </div>
+          <div class="offer-actions">
+            <a class="btn btn--primary btn--lg" href="#pay">Plati 25.000 RSD</a>
+            <a class="btn btn--secondary" href="#foot">Želim prvo da razgovaram</a>
+          </div>
+        </div>
+        <div class="offer-foot">
+          <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="7.5"/><path d="M10 6v4.5l3 1.8"/></svg>
+          Ponuda važi 7 dana od završetka testa.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>09 · SPECIAL OFFER</b>Premium rather than promotional: one navy header strip, a clear old→new price relationship, saving stated in a calm semantic green (not a red discount sticker), validity moved out of the pricing block into a quiet footer line. Emoji and shout-copy removed.</div>
+  </div>
+
+  <!-- ============================== PAYMENT ============================== -->
+  <section class="sec sec--paper" id="pay">
+    <div class="wrap stack g32">
+      <div class="stack g12" style="max-width:60ch">
+        <p class="eyebrow eyebrow--mut">Plaćanje</p>
+        <h2>Dva odvojena prikaza — desktop i mobilni</h2>
+      </div>
+
+      <div class="pay-grid">
+        <div class="pay-panel stack g20">
+          <span class="pay-cap">Desktop — QR ostaje vidljiv</span>
+          <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+            <div class="qr" id="qr" aria-hidden="true"></div>
+            <ul class="pay-rows" style="flex:1;min-width:190px">
+              <li><dt>Primalac</dt><b>Academia</b></li>
+              <li><dt>Račun</dt><b>000-0000000000-00</b></li>
+              <li><dt>Iznos</dt><b>25.000,00 RSD</b></li>
+              <li><dt>Poziv na broj</dt><b>ENG-2026</b></li>
+            </ul>
+          </div>
+          <p class="small">Skeniraj QR kod aplikacijom svoje banke ili prepiši podatke.</p>
+        </div>
+
+        <div class="pay-panel stack g20">
+          <span class="pay-cap">Mobilni — bez skeniranja sopstvenog ekrana</span>
+          <div class="phone-sim">
+            <div class="stack g8" style="gap:8px">
+              <p style="font-family:var(--f-head);font-weight:700;font-size:15px;margin:0">Iznos za uplatu</p>
+              <p style="font-family:var(--f-head);font-weight:800;font-size:26px;color:var(--navy);margin:0;font-variant-numeric:tabular-nums">25.000 RSD</p>
+            </div>
+            <div class="acc" id="acc" style="margin-top:14px">
+              <button type="button" class="acc-btn" id="accBtn" aria-expanded="false">
+                Prikaži podatke za uplatu
+                <svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="acc-panel">
+                <div class="copy-row"><span>Primalac</span><b>Academia</b></div>
+                <div class="copy-row"><span>Račun</span><b>000-0000000000-00</b></div>
+                <div class="copy-row"><span>Iznos</span><b>25.000,00 RSD</b></div>
+                <div class="copy-row"><span>Poziv na broj</span><b>ENG-2026</b></div>
+                <button type="button" class="btn btn--secondary" style="margin-top:14px;padding:13px 16px;font-size:12px;width:100%">Kopiraj podatke</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn--primary" style="margin-top:12px;padding:15px 16px;font-size:12.5px;width:100%">Uplaćeno — poveži uplatu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-band">
+    <div class="note"><b>10 · PAYMENT / QR</b>The QR stays on desktop. On mobile it is swapped for expandable payment details plus copy-to-clipboard, so nobody is asked to scan a code on the same phone. Both states shown side by side here for review; on the live page they are breakpoint-switched. If the bank supports IPS deep links, an "Open in banking app" button can replace the copy row — worth confirming with the current payment setup.</div>
+  </div>
+
+  <!-- ========================= SYSTEM APPENDIX =========================== -->
+  <section class="sec sys">
+    <div class="wrap stack g24">
+      <div class="stack g12" style="max-width:62ch">
+        <p class="eyebrow eyebrow--mut">Design system</p>
+        <h2>Jedan sistem za Elementor, QSM i temu</h2>
+        <p class="small">All tokens below are taken from the site's existing Elementor kit, so nothing new is introduced to the brand — they are simply applied consistently across the three systems that currently disagree with each other.</p>
+      </div>
+
+      <div class="sys-block stack g16">
+        <span class="pay-cap" style="margin:0">Boje</span>
+        <div class="swatches">
+          <div class="sw"><i style="background:#333367"></i><b>Primary</b><span>#333367</span></div>
+          <div class="sw"><i style="background:#131C43"></i><b>Heading</b><span>#131C43</span></div>
+          <div class="sw"><i style="background:#ED7733"></i><b>Accent / CTA</b><span>#ED7733</span></div>
+          <div class="sw"><i style="background:#6E7191"></i><b>Muted</b><span>#6E7191</span></div>
+          <div class="sw"><i style="background:#E4E5EE"></i><b>Line</b><span>#E4E5EE</span></div>
+          <div class="sw"><i style="background:#F2F2F8"></i><b>Surface</b><span>#F2F2F8</span></div>
+        </div>
+      </div>
+
+      <div class="sys-grid">
+        <div class="sys-block stack g8">
+          <span class="pay-cap" style="margin:0">Tipografija — Montserrat / Roboto</span>
+          <div class="type-row"><span style="font-family:var(--f-head);font-size:26px;font-weight:800;letter-spacing:-.02em">Naslov H1</span><code>Montserrat 800 · 50/34px</code></div>
+          <div class="type-row"><span style="font-family:var(--f-head);font-size:21px;font-weight:700">Naslov H2</span><code>Montserrat 700 · 34/26px</code></div>
+          <div class="type-row"><span style="font-family:var(--f-head);font-size:17px;font-weight:600">Pitanje u testu</span><code>Montserrat 600 · 26/20px</code></div>
+          <div class="type-row"><span style="font-size:16px">Osnovni tekst</span><code>Roboto 400 · 17/15px · 1.72</code></div>
+          <div class="type-row"><span style="font-size:13.5px;color:var(--muted)">Pomoćni tekst</span><code>Roboto 400 · 13.5px</code></div>
+          <div class="type-row"><span style="font-family:var(--f-head);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Dugme</span><code>Montserrat 700 · 14px · .06em</code></div>
+        </div>
+
+        <div class="sys-block stack g16">
+          <span class="pay-cap" style="margin:0">Dugmad — tri stila, jedno ponašanje</span>
+          <div class="stack g12" style="align-items:flex-start">
+            <button type="button" class="btn btn--primary">Započni test</button>
+            <button type="button" class="btn btn--secondary">Želim da razgovaram</button>
+            <a class="link" href="#form">Saznaj više <span class="arw">→</span></a>
+          </div>
+          <p class="small">Primary = Academia orange, used only for the single most important action per section. Secondary = white with border. Text link = tertiary. Hover, focus-visible and active states defined once and inherited by Elementor and QSM buttons alike.</p>
+        </div>
+      </div>
+
+      <div class="note" style="max-width:none">
+        <b>11 + 12 + 13 · SYSTEM, BUTTONS, SPACING</b>QSM's stylesheet is the main offender today — it ships its own font sizes and button styles that clash with the Elementor kit. Approach: one scoped stylesheet on this page that maps QSM's classes onto the tokens above, plus an 8px spacing scale (8 / 16 / 24 / 32 / 48 / 64 / 96) for section rhythm. No extra plugin, no theme fork.
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================== FOOTER ============================== -->
+  <footer class="foot" id="foot">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <div class="logo" style="margin-bottom:14px">
+            <div class="logo-mark">a</div>
+            <div class="logo-txt"><b>ACADEMIA</b><span>Centar za online nastavu</span></div>
+          </div>
+          <p>Kosovska 28, 11000 Beograd</p>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <a href="#foot">063 8305 344</a><br>
+          <a href="#foot">info@academia.rs</a><br>
+          <a href="#foot">Viber · WhatsApp</a>
+        </div>
+        <div>
+          <h4>Testovi i kursevi</h4>
+          <a href="#foot">Test znanja engleskog</a><br>
+          <a href="#foot">IELTS priprema</a><br>
+          <a href="#foot">Sertifikati</a>
+        </div>
+      </div>
+      <div class="foot-bot">
+        <span>© 2026 ACADEMIA</span>
+        <span>Politika privatnosti · Uslovi korišćenja</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="note-band" style="padding-top:26px;padding-bottom:34px">
+    <div class="note"><b>15 · FOOTER</b>Stripped to what a conversion page needs: identity, contact, two relevant links. Same navy as the result CTA so the page closes on brand rather than on a sitemap.</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- device preview ---- */
+  var wrap = document.getElementById('stageWrap');
+  document.querySelectorAll('[data-dev]').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('[data-dev]').forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      wrap.setAttribute('data-device', b.dataset.dev);
+    });
+  });
+
+  /* ---- annotations ---- */
+  var nt = document.getElementById('noteToggle');
+  nt.addEventListener('click', function(){
+    var on = nt.getAttribute('aria-pressed') === 'true';
+    nt.setAttribute('aria-pressed', String(!on));
+    nt.textContent = on ? 'Notes off' : 'Notes on';
+    document.body.classList.toggle('notes-off', on);
+  });
+
+  /* ---- single-select groups ---- */
+  function bindSingle(root){
+    root.addEventListener('click', function(e){
+      var btn = e.target.closest('[aria-pressed]');
+      if(!btn || !root.contains(btn)) return;
+      root.querySelectorAll('[aria-pressed]').forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+    });
+  }
+  document.querySelectorAll('[data-single]').forEach(bindSingle);
+
+  /* ---- quiz demo (real questions from the live test) ---- */
+  var QS = [
+    { n:12, q:['Where ','__',' when you met him?'], a:['does he live','is he living','was he living','has he lived'] },
+    { n:13, q:['It ','__',' I first met her.'], a:['says him','saw her','I say him','I have met'] },
+    { n:18, q:['I was very ','__',' in the story.'], a:['interesting','interested','interest','amused'] },
+    { n:26, q:['The house ','__',' built in the 18th century.'], a:['might have been','ought to been','might be','could be'] },
+    { n:39, q:["I've never come ",'__',' that word before.'], a:['across','over','into','of'] }
+  ];
+  var TOTAL = 40, i = 0;
+  var qNum = document.getElementById('qNum'),
+      qText = document.getElementById('qText'),
+      ans = document.getElementById('answers'),
+      lab = document.getElementById('progLab'),
+      pct = document.getElementById('progPct'),
+      fill = document.getElementById('progFill'),
+      prev = document.getElementById('prevBtn'),
+      next = document.getElementById('nextBtn');
+
+  var KEYS = ['A','B','C','D'];
+
+  function render(){
+    var item = QS[i];
+    qNum.textContent = 'Pitanje ' + item.n;
+    qText.textContent = '';
+    qText.appendChild(document.createTextNode(item.q[0]));
+    var u = document.createElement('u'); u.textContent = '';
+    qText.appendChild(u);
+    qText.appendChild(document.createTextNode(item.q[2]));
+
+    var p = Math.round(item.n / TOTAL * 100);
+    lab.textContent = 'Pitanje ' + item.n + ' od ' + TOTAL;
+    pct.textContent = p + '%';
+    fill.style.width = p + '%';
+
+    ans.textContent = '';
+    item.a.forEach(function(text, idx){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'a-opt';
+      b.setAttribute('aria-pressed','false');
+      var k = document.createElement('span');
+      k.className = 'key'; k.textContent = KEYS[idx];
+      b.appendChild(k);
+      b.appendChild(document.createTextNode(text));
+      ans.appendChild(b);
+    });
+
+    prev.disabled = i === 0;
+    next.textContent = i === QS.length - 1 ? 'Završi test' : 'Dalje';
+  }
+
+  next.addEventListener('click', function(){
+    if(i < QS.length - 1){ i++; render(); document.getElementById('quizCard').scrollIntoView({block:'center',behavior:'smooth'}); }
+    else { document.getElementById('result').scrollIntoView({behavior:'smooth'}); }
+  });
+  prev.addEventListener('click', function(){ if(i > 0){ i--; render(); } });
+  document.getElementById('skipBtn').addEventListener('click', function(){
+    document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  });
+  render();
+
+  /* ---- mobile payment accordion ---- */
+  var acc = document.getElementById('acc'), accBtn = document.getElementById('accBtn');
+  accBtn.addEventListener('click', function(){
+    var open = acc.classList.toggle('is-open');
+    accBtn.setAttribute('aria-expanded', String(open));
+    accBtn.childNodes[0].nodeValue = open ? 'Sakrij podatke za uplatu ' : 'Prikaži podatke za uplatu ';
+  });
+
+  /* ---- placeholder QR (deterministic, illustrative only) ---- */
+  var qr = document.getElementById('qr'), seed = 20260905;
+  function rnd(){ seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; }
+  function finder(x,y){
+    return (x<7 && y<7) || (x>13 && y<7) || (x<7 && y>13);
+  }
+  function finderOn(x,y){
+    var lx = x>13 ? x-14 : x, ly = y>13 ? y-14 : y;
+    var d = Math.max(Math.abs(lx-3), Math.abs(ly-3));
+    return d===3 || d<=1;
+  }
+  for(var y=0; y<21; y++){
+    for(var x=0; x<21; x++){
+      var cell = document.createElement('i');
+      var on = finder(x,y) ? finderOn(x,y) : rnd() > 0.52;
+      if(on) cell.className = 'on';
+      qr.appendChild(cell);
+    }
+  }
+})();
+</script>
